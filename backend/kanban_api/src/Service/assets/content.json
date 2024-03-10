@@ -1,0 +1,1 @@
+{"columnList":[{"id":"todo","name":"To do"},{"id":"running","name":"In progress"},{"id":"done","name":"Done"}],"taskList":[{"id":1,"title":"my task 1","content":" my content ici","column_id":"todo"},{"id":2,"title":"my task 2","content":" my content","column_id":"done"},{"id":3,"title":"my task 3  ","content":" my content","column_id":"done"}]}

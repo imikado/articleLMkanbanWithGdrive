@@ -1,51 +1,48 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import './App.css'
 import TaskColumn from './components/TaskColumn'
 import { Container, Stack } from '@mui/material'
 import TopNav from './components/TopNav'
 import TaskForm from './components/TaskForm'
+import axios from 'axios'
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const global_url_get_content = globalConfig.url_get_content
+  const global_url_save_content = globalConfig.url_save_content
 
   const [title, setTitle] = useState('undefined')
 
-  const [taskColumnList, setColumnList] = useState([
-    {
-      'id': 'todo',
-      'name': 'To do',
-    },
-    {
-      'id': 'running',
-      'name': 'In progress',
-    },
-    {
-      'id': 'done',
-      'name': 'Done',
-    }
-  ]);
+  const [taskColumnList, setColumnList] = useState([]);
+  const [taskList, setTaskList] = useState([]);
 
-  const [taskList, setTaskList] = useState([
-    {
-      id: 1,
-      title: 'my task 1',
-      content: ' my content',
-      column_id: 'running'
-    },
-    {
-      id: 2,
-      title: 'my task 2',
-      content: ' my content',
-      column_id: 'done'
-    },
-    {
-      id: 3,
-      title: 'my task 3  ',
-      content: ' my content',
-      column_id: 'done'
-    }
-  ]);
+  axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+
+
+
+  const saveContent = () => {
+    axios.post(global_url_save_content, {
+      columnList: taskColumnList,
+      taskList: taskList
+    })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+  }
+
+  useEffect(() => {
+    axios.get(global_url_get_content).then((data) => {
+      console.log(data);
+      setColumnList(data?.data.columnList);
+      setTaskList(data?.data.taskList);
+
+    });
+  }, []);
 
   const [taskEdited, setTaskEdited] = useState({})
 
@@ -77,20 +74,22 @@ function App() {
 
   return (
     <>
-      <Container maxWidth="lg" orientation="horizontal">
-        <TopNav title={title} />
-        <TaskForm taskColumnList={taskColumnList} opened={Object.keys(taskEdited).length > 0} task={taskEdited} handleTaskEdit={editTask} handleSave={saveEditedTask} handleClose={closeTaskForm} />
-        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-          <Stack direction="row" spacing={3}>
+      {taskColumnList.length > 0 &&
+        < Container maxWidth="lg" orientation="horizontal">
+          <TopNav title={title} handleSave={saveContent} />
+          <TaskForm taskColumnList={taskColumnList} opened={Object.keys(taskEdited).length > 0} task={taskEdited} handleTaskEdit={editTask} handleSave={saveEditedTask} handleClose={closeTaskForm} />
+          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+            <Stack direction="row" spacing={3}>
 
 
-            {
-              taskColumnList.map((taskColumnLoop) =>
-                <TaskColumn key={taskColumnLoop.id} handleTaskEdit={editTask} name={taskColumnLoop.name} taskList={taskList.filter(taskLoop => taskLoop.column_id == taskColumnLoop.id)} />)
-            }
-          </Stack >
-        </Container>
-      </Container>
+              {
+                taskColumnList.map((taskColumnLoop) =>
+                  <TaskColumn key={taskColumnLoop.id} handleTaskEdit={editTask} name={taskColumnLoop.name} taskList={taskList.filter(taskLoop => taskLoop.column_id == taskColumnLoop.id)} />)
+              }
+            </Stack >
+          </Container>
+        </Container >
+      }
 
     </>
   )

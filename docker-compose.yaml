@@ -1,0 +1,44 @@
+version: "3.4"
+
+services:
+  backend:
+    image: backend/php8.2-apache:latest
+    user: "$USER:${GID}"
+    container_name: backend_docker
+    working_dir: /var/www/html
+
+    ports:
+      - 80:80
+
+    volumes:
+      - type: bind
+        source: ./backend/
+        target: /var/www/html
+      - type: bind
+        source: /home/mika/dockerTmp
+        target: /home
+
+  frontend:
+    image: node:alpine
+    user: "$UID:$GID"
+    container_name: frontend_docker
+    entrypoint: /bin/sh
+    ports:
+      - 8000:8000
+    working_dir: /srv/app
+    volumes:
+      - type: bind
+        source: ./frontend/
+        target: /srv/app
+      - type: bind
+        source: /etc/passwd
+        target: /etc/passwd
+        read_only: true
+      - type: bind
+        source: /etc/group
+        target: /etc/group
+        read_only: true
+      - type: bind
+        source: ./home
+        target: /home
+    tty: true

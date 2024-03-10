@@ -1,0 +1,1 @@
+docker build . -t backend/php8.2-apache

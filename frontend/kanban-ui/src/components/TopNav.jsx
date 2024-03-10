@@ -10,7 +10,7 @@ export default function TopNav(props) {
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                     {props.title}
                 </Typography>
-                <Button color="inherit">Save</Button>
+                <Button onClick={() => props.handleSave()} color="inherit">Save</Button>
             </Toolbar>
         </AppBar>
 
