@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="120mm"
+   height="120mm"
+   viewBox="0 0 120 120"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   sodipodi:docname="logo_120x120.svg"
+   inkscape:export-filename="/home/mika/Pictures/sync/articles/dupotKanbanDrive/logo_16x16.png"
+   inkscape:export-xdpi="3.3866668"
+   inkscape:export-ydpi="3.3866668"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.57370932"
+     inkscape:cx="411.35814"
+     inkscape:cy="244.02602"
+     inkscape:window-width="1920"
+     inkscape:window-height="1013"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer2" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     sodipodi:insensitive="true">
+    <rect
+       style="fill:#ffe6d5;stroke-width:8.03646;stroke-linecap:round;stroke-linejoin:bevel;paint-order:stroke fill markers"
+       id="rect866"
+       width="54.788643"
+       height="111.23431"
+       x="3.7788115"
+       y="5.0389366"
+       rx="11.13346"
+       ry="11.957976" />
+    <rect
+       style="fill:#bdffbd;fill-opacity:1;stroke-width:8.03646;stroke-linecap:round;stroke-linejoin:bevel;paint-order:stroke fill markers"
+       id="rect866-5"
+       width="54.788643"
+       height="111.23431"
+       x="63.32996"
+       y="5.0389366"
+       rx="11.13346"
+       ry="11.957976" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Layer 2"
+     sodipodi:insensitive="true">
+    <rect
+       style="fill:#c87137;stroke-width:5.74372;stroke-linecap:round;stroke-linejoin:bevel;paint-order:stroke fill markers"
+       id="rect1003"
+       width="42.97311"
+       height="30.762733"
+       x="9.6924114"
+       y="31.356955"
+       rx="8.3027916"
+       ry="8.1906977" />
+    <rect
+       style="fill:#c87137;stroke-width:5.74372;stroke-linecap:round;stroke-linejoin:bevel;paint-order:stroke fill markers"
+       id="rect1003-7"
+       width="42.97311"
+       height="30.762733"
+       x="9.6924057"
+       y="68.998863"
+       rx="8.3027916"
+       ry="8.1906977" />
+    <rect
+       style="fill:#35a02c;fill-opacity:1;stroke-width:5.74372;stroke-linecap:round;stroke-linejoin:bevel;paint-order:stroke fill markers"
+       id="rect1003-74"
+       width="42.97311"
+       height="30.762733"
+       x="69.73954"
+       y="30.081327"
+       rx="8.3027916"
+       ry="8.1906977" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Layer 3">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:14.1111px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="15.141143"
+       y="24.505035"
+       id="text4690"><tspan
+         sodipodi:role="line"
+         id="tspan4688"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14.1111px;font-family:'Advanced Sans Serif 7';-inkscape-font-specification:'Advanced Sans Serif 7, ';stroke-width:0.264583"
+         x="15.141143"
+         y="24.505035">duPot</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:14.1111px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="67.111023"
+       y="23.784765"
+       id="text8828"><tspan
+         sodipodi:role="line"
+         id="tspan8826"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14.1111px;font-family:'Advanced Sans Serif 7';-inkscape-font-specification:'Advanced Sans Serif 7, ';stroke-width:0.264583"
+         x="67.111023"
+         y="23.784765">Kanban</tspan></text>
+  </g>
+</svg>

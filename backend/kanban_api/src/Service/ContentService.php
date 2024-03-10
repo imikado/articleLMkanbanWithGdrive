@@ -2,23 +2,41 @@
 
 namespace App\Service;
 
+use Symfony\Component\HttpFoundation\Request;
+
 class ContentService
 {
 
     protected $path;
 
-    public function __construct()
+    protected $gdriveService;
+    protected $sessionService;
+
+    public function __construct(Request $request)
     {
-        $this->path = __DIR__ . '/assets/content.json';
+        $this->gdriveService = new GDriveService($request);
+    }
+
+    private function getDriveService(): GDriveService
+    {
+        return $this->gdriveService;
+    }
+
+
+    private function getSessionFileId()
+    {
+        return $this->gdriveService->getSessionFileId();
     }
 
     public function getContent(): object
     {
-        return json_decode(file_get_contents($this->path));
+        $gdriveFile = $this->getDriveService()->readFile($this->getSessionFileId());
+        return json_decode($gdriveFile->content);
+        //return json_decode(file_get_contents($this->path));
     }
 
     public function writeContent(object $contentObj)
     {
-        file_put_contents($this->path, json_encode($contentObj));
+        return $this->getDriveService()->updateFile($this->getSessionFileId(), json_encode($contentObj));
     }
 }

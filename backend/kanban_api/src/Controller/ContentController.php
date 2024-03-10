@@ -11,16 +11,16 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ContentController extends AbstractController
 {
-    protected function getService(): ContentService
+    protected function getService(Request $request): ContentService
     {
-        return new ContentService();
+        return new ContentService($request);
     }
 
     #[Route('/content', methods: ['GET', 'HEAD'])]
-    public function index(): Response
+    public function index(Request $request): Response
     {
 
-        $content = $this->getService()->getContent();
+        $content = $this->getService($request)->getContent();
 
         return new JsonResponse($content);
     }
@@ -30,7 +30,7 @@ class ContentController extends AbstractController
     {
         $contentObj = json_decode($request->getContent());
 
-        $this->getService()->writeContent($contentObj);
+        $this->getService($request)->writeContent($contentObj);
 
         return new JsonResponse('OK');
     }
