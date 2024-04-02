@@ -34,6 +34,14 @@ class GDriveService
         }
     }
 
+    public function getInstallUrl()
+    {
+        $this->client->addScope("https://www.googleapis.com/auth/drive.install");
+        $scopes = ["https://www.googleapis.com/auth/drive.install"];
+        $authUrl = $this->client->createAuthUrl($scopes, ['enable_serial_consent' => 'true']);
+        return $authUrl;
+    }
+
     public function getSessionFileId()
     {
         return $this->sessionService->getFileId();

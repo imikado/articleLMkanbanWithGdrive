@@ -24,6 +24,8 @@ class GdriveController extends AbstractController
     const PARAM_ERROR = 'error';
     const PARAM_STATE = 'state';
 
+    const PARAM_INSTALL = 'install';
+
     const STATE_ACTION_OPEN = 'open';
     const STATE_ACTION_CREATE = 'create';
 
@@ -71,6 +73,10 @@ class GdriveController extends AbstractController
                     dd($response);
                 }
             }
+        } else if ($request->query->has(self::PARAM_INSTALL)) {
+            return $this->redirect($gDriveService->getInstallUrl());
+
+            // return new JsonResponse('OK');
         } else {
             return new JsonResponse('OK');
         }
