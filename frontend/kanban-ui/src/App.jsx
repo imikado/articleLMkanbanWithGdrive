@@ -6,6 +6,7 @@ import { Container, Stack } from '@mui/material'
 import TopNav from './components/TopNav'
 import TaskForm from './components/TaskForm'
 import axios from 'axios'
+import TaskColumnForm from './components/TaskColumnForm'
 
 function App() {
 
@@ -18,8 +19,6 @@ function App() {
   const [taskList, setTaskList] = useState([]);
 
   axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
-
-
 
   const saveContent = () => {
     axios.post(global_url_save_content, {
@@ -35,6 +34,7 @@ function App() {
 
   }
 
+  
   useEffect(() => {
     axios.get(global_url_get_content).then((data) => {
       console.log(data);
@@ -45,10 +45,9 @@ function App() {
   }, []);
 
   const [taskEdited, setTaskEdited] = useState({})
+  const [columnEdited, setColumnEdited] = useState({})
 
-  const saveTask = () => {
-
-  }
+  //tasks
   const closeTaskForm = () => {
     setTaskEdited({})
   }
@@ -72,11 +71,37 @@ function App() {
     setTaskEdited({})
   }
 
+  //columns
+  const closeColumnForm = () => {
+    setColumnEdited({})
+  }
+
+  const editColumn =(columnToEdit)=>{
+    setColumnEdited(columnToEdit)
+  }
+
+  const saveEditedColumn = () => {
+
+    let newColumnList = taskColumnList.map(columnLoop => {
+      if (columnLoop.id == columnEdited.id) {
+        return { ...columnEdited }
+
+      }
+      return columnLoop
+    })
+
+    setColumnList(newColumnList)
+
+    setColumnEdited({})
+  }
+
   return (
     <>
       {taskColumnList.length > 0 &&
         < Container maxWidth="lg" orientation="horizontal">
           <TopNav title={title} handleSave={saveContent} />
+          
+          <TaskColumnForm opened={Object.keys(columnEdited).length > 0} column={columnEdited} handleColumnEdit={editColumn} handleSave={saveEditedColumn} handleClose={closeColumnForm}  />
           <TaskForm taskColumnList={taskColumnList} opened={Object.keys(taskEdited).length > 0} task={taskEdited} handleTaskEdit={editTask} handleSave={saveEditedTask} handleClose={closeTaskForm} />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Stack direction="row" spacing={3}>
@@ -84,8 +109,12 @@ function App() {
 
               {
                 taskColumnList.map((taskColumnLoop) =>
-                  <TaskColumn key={taskColumnLoop.id} handleTaskEdit={editTask} name={taskColumnLoop.name} taskList={taskList.filter(taskLoop => taskLoop.column_id == taskColumnLoop.id)} />)
+                  <TaskColumn handleColumnEdit={editColumn}  key={taskColumnLoop.id} handleTaskEdit={editTask} column={taskColumnLoop} name={taskColumnLoop.name} taskList={taskList.filter(taskLoop => taskLoop.column_id == taskColumnLoop.id)} />)
               }
+
+
+
+
             </Stack >
           </Container>
         </Container >

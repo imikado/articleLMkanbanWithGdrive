@@ -1,6 +1,7 @@
-import { Box, Divider, Paper, Typography } from '@mui/material';
+import { Box, Divider, Paper, Typography, IconButton } from '@mui/material';
 import React from 'react';
 import Task from './Task';
+import EditIcon from '@mui/icons-material/Edit';
 
 
 export default function TaskColumn(props) {
@@ -11,6 +12,9 @@ export default function TaskColumn(props) {
       <Box >
         <Typography variant="h2" component="h3">
           {props.name}
+          <IconButton aria-label="add to favorites" onClick={() => props.handleColumnEdit(props.column)}>
+                            <EditIcon />
+                        </IconButton>
         </Typography>
         <Divider orientation="horizontal" flexItem />
 
