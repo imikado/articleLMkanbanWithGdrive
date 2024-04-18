@@ -98,13 +98,13 @@ function App() {
   return (
     <>
       {taskColumnList.length > 0 &&
-        < Container maxWidth="lg" orientation="horizontal">
+        <Container maxWidth="lg" orientation="horizontal" padding={0}>
           <TopNav title={title} handleSave={saveContent} />
           
           <TaskColumnForm opened={Object.keys(columnEdited).length > 0} column={columnEdited} handleColumnEdit={editColumn} handleSave={saveEditedColumn} handleClose={closeColumnForm}  />
           <TaskForm taskColumnList={taskColumnList} opened={Object.keys(taskEdited).length > 0} task={taskEdited} handleTaskEdit={editTask} handleSave={saveEditedTask} handleClose={closeTaskForm} />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Stack direction="row" spacing={3}>
+          <Container maxWidth="lg" sx={{ margin:0,  mt: 3, padding:0 }}>
+            <Stack direction="row" spacing={3} padding={0}>
 
 
               {
@@ -119,6 +119,7 @@ function App() {
           </Container>
         </Container >
       }
+     
 
     </>
   )

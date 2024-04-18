@@ -8,15 +8,14 @@ export default function TaskColumn(props) {
   return (
 
 
-    <Paper elevation={1} sx={{ bgcolor: '#DAE7F0' }} >
+    <Paper elevation={1} sx={{ bgcolor: '#DAE7F0', margin:0 }} >
       <Box >
-        <Typography variant="h2" component="h3">
+        <Typography variant="h3" component="h4" margin={4} mt={2}>
           {props.name}
           <IconButton aria-label="add to favorites" onClick={() => props.handleColumnEdit(props.column)}>
                             <EditIcon />
                         </IconButton>
         </Typography>
-        <Divider orientation="horizontal" flexItem />
 
         {
           props.taskList.map(taskLoop =>
