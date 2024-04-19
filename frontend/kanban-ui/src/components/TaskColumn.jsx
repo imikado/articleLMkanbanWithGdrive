@@ -8,13 +8,13 @@ export default function TaskColumn(props) {
   return (
 
 
-    <Paper elevation={1} sx={{ bgcolor: '#DAE7F0', margin:0 }} >
+    <Paper elevation={1} sx={{ bgcolor: '#DAE7F0', margin: 0 }} >
       <Box >
         <Typography variant="h3" component="h4" margin={4} mt={2}>
           {props.name}
-          <IconButton aria-label="add to favorites" onClick={() => props.handleColumnEdit(props.column)}>
-                            <EditIcon />
-                        </IconButton>
+          <IconButton aria-label="Edit" onClick={() => props.handleColumnEdit(props.column)}>
+            <EditIcon />
+          </IconButton>
         </Typography>
 
         {
