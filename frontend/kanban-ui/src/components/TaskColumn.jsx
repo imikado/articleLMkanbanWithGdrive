@@ -1,4 +1,4 @@
-import { Box, Divider, Paper, Typography, IconButton } from '@mui/material';
+import { Box, Divider, Paper, Typography, IconButton, Button } from '@mui/material';
 import React from 'react';
 import Task from './Task';
 import EditIcon from '@mui/icons-material/Edit';
@@ -8,14 +8,10 @@ export default function TaskColumn(props) {
   return (
 
 
-    <Paper elevation={1} sx={{ bgcolor: '#DAE7F0', margin: 0 }} >
-      <Box >
-        <Typography variant="h3" component="h4" margin={4} mt={2}>
-          {props.name}
-          <IconButton aria-label="Edit" onClick={() => props.handleColumnEdit(props.column)}>
-            <EditIcon />
-          </IconButton>
-        </Typography>
+    <Paper elevation={1} sx={{ bgcolor: '#DAE7F0', margin: 0, width: "100%" }} >
+      <Box sx={{ padding: 1 }}>
+        <Button variant="text" size="large" endIcon={<EditIcon />} sx={{ padding: 2 }} onClick={() => props.handleColumnEdit(props.column)}> {props.name}</Button>
+
 
         {
           props.taskList.map(taskLoop =>

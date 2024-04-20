@@ -78,7 +78,14 @@ class GdriveController extends AbstractController
 
             // return new JsonResponse('OK');
         } else {
-            return new JsonResponse('OK');
+            $response = (object)[
+                'action' => (object)[
+                    'notification' => (object)[
+                        'text' => 'Successfully installed'
+                    ]
+                ]
+            ];
+            return new JsonResponse($response);
         }
     }
 }

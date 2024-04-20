@@ -9,6 +9,28 @@ import axios from 'axios'
 import TaskColumnForm from './components/TaskColumnForm'
 import TitleForm from './components/TitleForm'
 
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+
+const theme = createTheme({
+  components: {
+    MuiContainer: {
+      styleOverrides: {
+        root: {
+          maxWidth: '1440px'
+        },
+        maxWidthMd: {
+          maxWidth: 320,
+        },
+        maxWidthLg: {
+          maxWidth: '1440px!important',
+        },
+      },
+    },
+  }
+}
+);
+
 function App() {
 
   const global_url_get_content = globalConfig.url_get_content
@@ -96,6 +118,22 @@ function App() {
     setColumnEdited({})
   }
 
+  const addColumn = () => {
+    let newColumn = {
+      id: taskColumnList.length + 1,
+      name: 'new column',
+    }
+
+    let newColumnList = [...taskColumnList]
+    newColumnList.push(newColumn)
+
+    setColumnList(newColumnList)
+
+    editColumn(newColumn)
+
+
+  }
+
   const editColumn = (columnToEdit) => {
     setColumnEdited(columnToEdit)
   }
@@ -132,28 +170,32 @@ function App() {
   return (
     <>
       {taskColumnList.length > 0 &&
-        <Container maxWidth="lg" orientation="horizontal" padding={0}>
-          <TopNav title={title} handleSave={saveContent} handleTitleEdit={editTitle} handleTaskAdd={addTask} />
 
-          <TitleForm opened={Object.keys(titleEdited).length > 0} title={titleEdited.title} handleTitleEdit={editTitle} handleSave={saveEditedTitle} handleClose={closeTitleForm} />
+        <ThemeProvider theme={theme}>
 
-          <TaskColumnForm opened={Object.keys(columnEdited).length > 0} column={columnEdited} handleColumnEdit={editColumn} handleSave={saveEditedColumn} handleClose={closeColumnForm} />
-          <TaskForm taskColumnList={taskColumnList} opened={Object.keys(taskEdited).length > 0} task={taskEdited} handleTaskEdit={editTask} handleSave={saveEditedTask} handleClose={closeTaskForm} />
-          <Container maxWidth="lg" sx={{ margin: 0, mt: 3, padding: 0 }}>
-            <Stack direction="row" spacing={3} padding={0}>
+          <Container maxWidth={false} orientation="horizontal" padding={0}>
+            <TopNav title={title} handleSave={saveContent} handleTitleEdit={editTitle} handleTaskAdd={addTask} handleColumnAdd={addColumn} />
 
+            <TitleForm opened={Object.keys(titleEdited).length > 0} title={titleEdited.title} handleTitleEdit={editTitle} handleSave={saveEditedTitle} handleClose={closeTitleForm} />
 
-              {
-                taskColumnList.map((taskColumnLoop) =>
-                  <TaskColumn handleColumnEdit={editColumn} key={taskColumnLoop.id} handleTaskEdit={editTask} column={taskColumnLoop} name={taskColumnLoop.name} taskList={taskList.filter(taskLoop => taskLoop.column_id == taskColumnLoop.id)} />)
-              }
+            <TaskColumnForm opened={Object.keys(columnEdited).length > 0} column={columnEdited} handleColumnEdit={editColumn} handleSave={saveEditedColumn} handleClose={closeColumnForm} />
+            <TaskForm taskColumnList={taskColumnList} opened={Object.keys(taskEdited).length > 0} task={taskEdited} handleTaskEdit={editTask} handleSave={saveEditedTask} handleClose={closeTaskForm} />
+            <Container maxWidth="lg" sx={{ margin: 0, mt: 3, padding: 0 }}>
+              <Stack direction="row" spacing={1} padding={0} useFlexGap justifyContent="space-evenly">
 
 
+                {
+                  taskColumnList.map((taskColumnLoop) =>
+                    <TaskColumn handleColumnEdit={editColumn} key={taskColumnLoop.id} handleTaskEdit={editTask} column={taskColumnLoop} name={taskColumnLoop.name} taskList={taskList.filter(taskLoop => taskLoop.column_id == taskColumnLoop.id)} />)
+                }
 
 
-            </Stack >
-          </Container>
-        </Container >
+
+
+              </Stack >
+            </Container>
+          </Container >
+        </ThemeProvider>
       }
 
 

@@ -8,7 +8,7 @@ import React from 'react';
 export default function TopNav(props) {
     return (
 
-        <AppBar position="static">
+        <AppBar position="static" sx={{ width: 1 }}>
             <Toolbar>
 
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
@@ -19,7 +19,7 @@ export default function TopNav(props) {
                 </Typography>
 
                 <ButtonGroup variant="outlined">
-                    <Button startIcon={<AddIcon />} onClick={() => props.handleSave()} color="inherit">Column</Button>
+                    <Button startIcon={<AddIcon />} onClick={() => props.handleColumnAdd()} color="inherit">Column</Button>
                     <Button startIcon={<AddIcon />} onClick={() => props.handleTaskAdd()} color="inherit">Task</Button>
                 </ButtonGroup>
 
