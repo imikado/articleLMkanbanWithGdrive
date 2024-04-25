@@ -36,9 +36,10 @@ class GdriveController extends AbstractController
     #[Route('/')]
     public function gdrive(Request $request): Response
     {
-        $gDriveService = new GDriveService($request);
+        $gDriveService = new GDriveService($request, false);
 
         if ($request->query->has(self::PARAM_CODE)) {
+
             $gDriveService->fetchAndSaveAccessTokenWithAuthCode($request->query->get(self::PARAM_CODE));
         }
 
@@ -46,9 +47,29 @@ class GdriveController extends AbstractController
             dd($request->query->get(self::PARAM_ERROR));
         }
 
-        if ($request->query->has(self::PARAM_STATE)) {
+        $hasState = $request->query->has(self::PARAM_STATE);
+        $hasSessionState = false;
+        if ($gDriveService->getSessionService()->hasGdriveSessionState()) {
+            $hasSessionState = true;
+            $sessionState = $gDriveService->getSessionService()->getGdriveSessionState();
+            $gDriveService->getSessionService()->removeGdriveSessionState();
+        }
 
-            $state = json_decode(urldecode($request->query->get(self::PARAM_STATE)));
+        if ($hasState or $hasSessionState) {
+
+
+            if ($hasSessionState) {
+                $state = $sessionState;
+            } else {
+                $state = json_decode(urldecode($request->query->get(self::PARAM_STATE)));
+            }
+
+            if (!$gDriveService->hasGDriveToken()) {
+                $gDriveService->getSessionService()->saveGdriveSessionState($state);
+                return $this->redirect($gDriveService->getGdriveAuthUrl());
+            }
+
+            //$userId = $state->userId;
 
             if ($state->action == self::STATE_ACTION_OPEN) {
 
@@ -56,7 +77,11 @@ class GdriveController extends AbstractController
 
                 $gDriveService->saveFileIdInSession($id);
 
-                return $this->redirect('index.html');
+                if ($gDriveService->hasGDriveToken()) {
+                    return $this->redirect('index.html');
+                }
+
+                return $this->redirect($gDriveService->getGdriveAuthUrl());
             } else if ($state->action == self::STATE_ACTION_CREATE) {
 
                 $fileId = 'KanbanFile' . date('Y-m-d_Hi');
@@ -78,14 +103,20 @@ class GdriveController extends AbstractController
 
             // return new JsonResponse('OK');
         } else {
-            $response = (object)[
-                'action' => (object)[
-                    'notification' => (object)[
-                        'text' => 'Successfully installed'
-                    ]
-                ]
-            ];
-            return new JsonResponse($response);
+            return $this->redirect('index.html');
+        }
+    }
+
+    protected function createFileWithStateAndService($state, $gDriveService)
+    {
+        $fileId = 'KanbanFile' . date('Y-m-d_Hi');
+
+        $content = json_encode(new KanbanFile($fileId, 'Mon Kanban', json_decode('[{"id":"todo","name":"To do"},{"id":"running","name":"In progress"},{"id":"done","name":"Done"}]'), []));
+
+        $response = $gDriveService->createFileInFolder($fileId . '.kanban', $content, $state->folderId);
+
+        if (isset($response->id)) {
+            $gDriveService->saveFileIdInSession($response->id);
         }
     }
 }

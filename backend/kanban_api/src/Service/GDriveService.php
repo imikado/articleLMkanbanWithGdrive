@@ -17,21 +17,34 @@ class GDriveService
 
     protected $sessionService;
 
-    public function __construct(Request $request)
+    public function __construct(Request $request, $reset = false)
     {
 
         $client = new Client();
         $client->setAuthConfig(__DIR__ . '/../../../gdrive/auth.json');
         $client->setRedirectUri($this->redirectUri);
-        $client->addScope("https://www.googleapis.com/auth/drive");
+        $client->addScope("https://www.googleapis.com/auth/drive.file");
+        $client->addScope("https://www.googleapis.com/auth/drive.install");
+        //$client->addScope("https://www.googleapis.com/auth/userinfo.email");
+        //$client->addScope("https://www.googleapis.com/auth/userinfo.profile");
 
         $this->sessionService = new SessionService($request->getSession());
 
         $this->client = $client;
 
-        if ($this->sessionService->hasToken()) {
+        if (!$reset and $this->sessionService->hasToken()) {
             $this->setAccessToken($this->sessionService->getToken());
         }
+    }
+
+    public function getSessionService()
+    {
+        return $this->sessionService;
+    }
+
+    public function hasGDriveToken()
+    {
+        return $this->sessionService->hasToken();
     }
 
     public function getInstallUrl()
@@ -40,6 +53,11 @@ class GDriveService
         $scopes = ["https://www.googleapis.com/auth/drive.install"];
         $authUrl = $this->client->createAuthUrl($scopes, ['enable_serial_consent' => 'true']);
         return $authUrl;
+    }
+
+    public function getGdriveAuthUrl()
+    {
+        return $this->client->createAuthUrl();
     }
 
     public function getSessionFileId()

@@ -15,6 +15,7 @@ class ContentService
     public function __construct(Request $request)
     {
         $this->gdriveService = new GDriveService($request);
+        $this->path = __DIR__ . '/assets/content.json';
     }
 
     private function getDriveService(): GDriveService
@@ -30,9 +31,9 @@ class ContentService
 
     public function getContent(): object
     {
+        return json_decode(file_get_contents($this->path));
         $gdriveFile = $this->getDriveService()->readFile($this->getSessionFileId());
         return json_decode($gdriveFile->content);
-        //return json_decode(file_get_contents($this->path));
     }
 
     public function writeContent(object $contentObj)

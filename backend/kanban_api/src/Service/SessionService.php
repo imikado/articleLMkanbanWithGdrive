@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Session\Session;
 class SessionService
 {
 
+    const GSTATE = 'gDriveState';
+
     protected $requestSession;
 
     public function __construct(Session $requestSession)
@@ -38,5 +40,22 @@ class SessionService
     public function getFileId()
     {
         return $this->requestSession->get(Gdrive::FILE_ID);
+    }
+
+    public function hasGdriveSessionState()
+    {
+        return $this->requestSession->has(self::GSTATE);
+    }
+    public function getGdriveSessionState()
+    {
+        return json_decode(base64_decode($this->requestSession->get(self::GSTATE)));
+    }
+    public function saveGdriveSessionState(object $gState)
+    {
+        return $this->requestSession->set(self::GSTATE, base64_encode(json_encode($gState)));
+    }
+    public function removeGdriveSessionState()
+    {
+        $this->requestSession->remove(self::GSTATE);
     }
 }
