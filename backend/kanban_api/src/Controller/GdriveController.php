@@ -77,11 +77,7 @@ class GdriveController extends AbstractController
 
                 $gDriveService->saveFileIdInSession($id);
 
-                if ($gDriveService->hasGDriveToken()) {
-                    return $this->redirect('index.html');
-                }
-
-                return $this->redirect($gDriveService->getGdriveAuthUrl());
+                return $this->redirect('index.html');
             } else if ($state->action == self::STATE_ACTION_CREATE) {
 
                 $fileId = 'KanbanFile' . date('Y-m-d_Hi');
@@ -104,19 +100,6 @@ class GdriveController extends AbstractController
             // return new JsonResponse('OK');
         } else {
             return $this->redirect('index.html');
-        }
-    }
-
-    protected function createFileWithStateAndService($state, $gDriveService)
-    {
-        $fileId = 'KanbanFile' . date('Y-m-d_Hi');
-
-        $content = json_encode(new KanbanFile($fileId, 'Mon Kanban', json_decode('[{"id":"todo","name":"To do"},{"id":"running","name":"In progress"},{"id":"done","name":"Done"}]'), []));
-
-        $response = $gDriveService->createFileInFolder($fileId . '.kanban', $content, $state->folderId);
-
-        if (isset($response->id)) {
-            $gDriveService->saveFileIdInSession($response->id);
         }
     }
 }

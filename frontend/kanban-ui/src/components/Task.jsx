@@ -14,7 +14,7 @@ export default function Task(props) {
                             {props.task.title}
                         </Typography>
 
-                        <Typography variant="body2">
+                        <Typography variant="body2" className="display-linebreak">
                             {props.task.content}
                         </Typography>
                     </CardContent>

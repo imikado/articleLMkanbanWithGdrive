@@ -36,7 +36,7 @@ function App() {
   const global_url_get_content = globalConfig.url_get_content
   const global_url_save_content = globalConfig.url_save_content
 
-  const [title, setTitle] = useState('undefined')
+  const [title, setTitle] = useState('my title')
 
   const [taskColumnList, setColumnList] = useState([]);
   const [taskList, setTaskList] = useState([]);
