@@ -10,13 +10,17 @@ export default function TaskColumn(props) {
 
     <Paper elevation={1} sx={{ bgcolor: '#DAE7F0', margin: 0, width: "100%" }} >
       <Box sx={{ padding: 1 }}>
-        <Box sx={{ padding: 1,textAlign:"center" }}>
+        <Box sx={{ padding: 1, textAlign: "center" }}>
           <Button variant="text" size="large" endIcon={<EditIcon />} sx={{ padding: 2 }} onClick={() => props.handleColumnEdit(props.column)}> {props.name}</Button>
         </Box>
 
         {
           props.taskList.map(taskLoop =>
-            <Task key={taskLoop.id} handleTaskEdit={props.handleTaskEdit} task={taskLoop} />
+            <Task
+              key={taskLoop.id}
+              handleTaskEdit={props.handleTaskEdit}
+              handleTaskDelete={props.handleTaskDelete}
+              task={taskLoop} />
           )
         }
       </Box>

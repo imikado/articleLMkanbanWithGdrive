@@ -1,7 +1,13 @@
-import { Box, Card, CardActions, CardContent, IconButton, Typography } from '@mui/material';
+import { Box, Card, CardActions, CardContent, IconButton, Typography, Grid } from '@mui/material';
 import React from 'react';
 
+import Button from '@mui/material/Button';
+
+
 import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import AddTaskIcon from '@mui/icons-material/AddTask';
 
 export default function Task(props) {
     return (
@@ -10,20 +16,35 @@ export default function Task(props) {
                 <Card elevation={3}>
                     <CardContent>
 
-                        <Typography variant="h5" component="div">
+                        <Typography variant="h5" color="#333" component="div">
+                            <AddTaskIcon sx={{ marginRight: 1, color: "#444" }} />
                             {props.task.title}
                         </Typography>
 
-                        <Typography variant="body2" className="display-linebreak">
-                            {props.task.content}
-                        </Typography>
+                        <Box sx={{ marginLeft: 2, marginTop: 2, color: "#444" }}>
+                            <Typography variant="body" className="display-linebreak" >
+                                {props.task.content}
+                            </Typography>
+                        </Box>
                     </CardContent>
-                    <CardActions>
+                    <CardActions disableSpacing
+                        sx={{
+                            alignSelf: "stretch",
+                            display: "flex",
+                            justifyContent: "flex-end",
+                            alignItems: "flex-start",
+                            p: 1,
+                        }}>
 
 
-                        <IconButton aria-label="add to favorites" onClick={() => props.handleTaskEdit(props.task)}>
-                            <EditIcon />
-                        </IconButton>
+
+                        <Button size="small" color='info' onClick={() => props.handleTaskEdit(props.task)} startIcon={<EditIcon />}>
+                            Editer
+                        </Button>
+
+                        <Button size="small" color="error" onClick={() => props.handleTaskDelete(props.task)} startIcon={<DeleteIcon />}>
+                            Supprimer
+                        </Button>
 
 
                     </CardActions>

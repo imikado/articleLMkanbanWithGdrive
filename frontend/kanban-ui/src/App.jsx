@@ -10,6 +10,7 @@ import TaskColumnForm from './components/TaskColumnForm'
 import TitleForm from './components/TitleForm'
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { ConfirmationDialog } from './components/ConfirmationDialog'
 
 
 const theme = createTheme({
@@ -73,6 +74,8 @@ function App() {
   const [titleEdited, setTitleEdited] = useState({})
 
 
+  const [taskToDeleteAsked, setTaskToDeleteAsked] = useState({})
+
 
   //tasks
   const closeTaskForm = () => {
@@ -81,6 +84,9 @@ function App() {
 
   const editTask = (taskToEdit) => {
     setTaskEdited(taskToEdit)
+  }
+  const askDeleteTask = (taskAskedToDelete) => {
+    setTaskToDeleteAsked(taskAskedToDelete)
   }
 
   const addTask = () => {
@@ -167,6 +173,17 @@ function App() {
     setTitleEdited({})
   }
 
+  const confirmTaskToDelete = () => {
+
+
+
+    let newTaskList = taskList.filter((taskLoop) => taskLoop.id != taskToDeleteAsked.id)
+
+    setTaskList(newTaskList)
+
+    setTaskToDeleteAsked({})
+  }
+
   return (
     <>
       {taskColumnList.length > 0 &&
@@ -175,6 +192,8 @@ function App() {
 
           <Container maxWidth={false} orientation="horizontal" padding={0}>
             <TopNav title={title} handleSave={saveContent} handleTitleEdit={editTitle} handleTaskAdd={addTask} handleColumnAdd={addColumn} />
+
+            <ConfirmationDialog handleOk={confirmTaskToDelete} handleCancel={() => setTaskToDeleteAsked({})} title="Confirmez la suppression" content="Confirmez vous la suppression de cette tache" opened={Object.keys(taskToDeleteAsked).length > 0} />
 
             <TitleForm opened={Object.keys(titleEdited).length > 0} title={titleEdited.title} handleTitleEdit={editTitle} handleSave={saveEditedTitle} handleClose={closeTitleForm} />
 
@@ -186,7 +205,14 @@ function App() {
 
                 {
                   taskColumnList.map((taskColumnLoop) =>
-                    <TaskColumn handleColumnEdit={editColumn} key={taskColumnLoop.id} handleTaskEdit={editTask} column={taskColumnLoop} name={taskColumnLoop.name} taskList={taskList.filter(taskLoop => taskLoop.column_id == taskColumnLoop.id)} />)
+                    <TaskColumn
+                      handleColumnEdit={editColumn}
+                      key={taskColumnLoop.id}
+                      handleTaskEdit={editTask}
+                      handleTaskDelete={askDeleteTask}
+                      column={taskColumnLoop}
+                      name={taskColumnLoop.name}
+                      taskList={taskList.filter(taskLoop => taskLoop.column_id == taskColumnLoop.id)} />)
                 }
 
 
