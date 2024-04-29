@@ -21,21 +21,11 @@ class ContentController extends AbstractController
     {
         $fileId = $request->get('fileId');
 
-
         $content = $this->getService($request)->getContent($fileId);
 
         return new JsonResponse($content);
     }
 
-    #[Route('/content2', methods: ['GET', 'HEAD'])]
-    public function index2(Request $request): Response
-    {
-        $gdriveFileId = $request->get('fileId');
-
-        $content = $this->getService($request)->getContent($gdriveFileId);
-
-        return new JsonResponse($content);
-    }
 
     #[Route('/saveContent', methods: ['POST', 'HEAD', 'GET'])]
     public function save(Request $request): Response
