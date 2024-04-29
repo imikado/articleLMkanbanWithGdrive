@@ -37,6 +37,8 @@ function App() {
   const global_url_get_content = globalConfig.url_get_content
   const global_url_save_content = globalConfig.url_save_content
 
+  const [gDrivefileId, setGDriveFileId] = useState('0');
+
   const [title, setTitle] = useState('my title')
 
   const [taskColumnList, setColumnList] = useState([]);
@@ -48,7 +50,8 @@ function App() {
     axios.post(global_url_save_content, {
       columnList: taskColumnList,
       taskList: taskList,
-      title: title
+      title: title,
+      fileId: gDrivefileId
     })
       .then(function (response) {
         console.log(response);
@@ -61,7 +64,14 @@ function App() {
 
 
   useEffect(() => {
-    axios.get(global_url_get_content).then((data) => {
+
+    let url = new URL(document.location)
+    let params = new URLSearchParams(url.search);
+    let fileId = params.get('fileId')
+
+    setGDriveFileId(fileId);
+
+    axios.get(global_url_get_content + '?fileId=' + fileId).then((data) => {
       console.log(data);
       setColumnList(data?.data.columnList);
       setTaskList(data?.data.taskList);

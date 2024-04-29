@@ -73,11 +73,11 @@ class GdriveController extends AbstractController
 
             if ($state->action == self::STATE_ACTION_OPEN) {
 
-                $id = $state->ids[0];
+                $gDriveFileId = $state->ids[0];
 
-                $gDriveService->saveFileIdInSession($id);
+                //$gDriveService->saveFileIdInSession($id);
 
-                return $this->redirect('index.html');
+                return $this->getRedirectUrlWithFileId($gDriveFileId);
             } else if ($state->action == self::STATE_ACTION_CREATE) {
 
                 $fileId = 'KanbanFile' . date('Y-m-d_Hi');
@@ -87,19 +87,23 @@ class GdriveController extends AbstractController
                 $response = $gDriveService->createFileInFolder($fileId . '.kanban', $content, $state->folderId);
 
                 if (isset($response->id)) {
-                    $gDriveService->saveFileIdInSession($response->id);
 
-                    return $this->redirect('index.html');
+                    $gDriveFileId = $response->id;
+
+                    //$gDriveService->saveFileIdInSession($response->id);
+
+                    return $this->getRedirectUrlWithFileId($gDriveFileId);
                 } else {
                     dd($response);
                 }
             }
-        } else if ($request->query->has(self::PARAM_INSTALL)) {
-            return $this->redirect($gDriveService->getInstallUrl());
-
-            // return new JsonResponse('OK');
         } else {
-            return $this->redirect('index.html');
+            return $this->redirect('index.php');
         }
+    }
+
+    protected function getRedirectUrlWithFileId($fileId)
+    {
+        return $this->redirect('index.html?fileId=' . $fileId);
     }
 }

@@ -19,8 +19,20 @@ class ContentController extends AbstractController
     #[Route('/content', methods: ['GET', 'HEAD'])]
     public function index(Request $request): Response
     {
+        $fileId = $request->get('fileId');
 
-        $content = $this->getService($request)->getContent();
+
+        $content = $this->getService($request)->getContent($fileId);
+
+        return new JsonResponse($content);
+    }
+
+    #[Route('/content2', methods: ['GET', 'HEAD'])]
+    public function index2(Request $request): Response
+    {
+        $gdriveFileId = $request->get('fileId');
+
+        $content = $this->getService($request)->getContent($gdriveFileId);
 
         return new JsonResponse($content);
     }
@@ -29,9 +41,15 @@ class ContentController extends AbstractController
     public function save(Request $request): Response
     {
         $contentObj = json_decode($request->getContent());
+        $fileId = $contentObj->fileId;
 
-        $this->getService($request)->writeContent($contentObj);
+        $this->getService($request)->writeContent($fileId, $contentObj);
 
-        return new JsonResponse('OK');
+        $objectResponse = (object)[
+            'status' => 'OK',
+            //'debug'=>$gdriveResponse
+        ];
+
+        return new JsonResponse($objectResponse);
     }
 }

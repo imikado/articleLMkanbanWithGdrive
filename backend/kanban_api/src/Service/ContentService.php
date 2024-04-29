@@ -29,15 +29,15 @@ class ContentService
         return $this->gdriveService->getSessionFileId();
     }
 
-    public function getContent(): object
+    public function getContent($fileId): object
     {
-        return json_decode(file_get_contents($this->path));
-        $gdriveFile = $this->getDriveService()->readFile($this->getSessionFileId());
+        //return json_decode(file_get_contents($this->path));
+        $gdriveFile = $this->getDriveService()->readFile($fileId);
         return json_decode($gdriveFile->content);
     }
 
-    public function writeContent(object $contentObj)
+    public function writeContent($fileId, object $contentObj)
     {
-        return $this->getDriveService()->updateFile($this->getSessionFileId(), json_encode($contentObj));
+        return $this->getDriveService()->updateFile($fileId, json_encode($contentObj));
     }
 }
