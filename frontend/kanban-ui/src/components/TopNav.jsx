@@ -1,6 +1,8 @@
 import { AppBar, Box, Button, IconButton, Toolbar, Typography, ButtonGroup } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 import AddIcon from '@mui/icons-material/Add';
+import CircularProgress from '@mui/material/CircularProgress';
+
 import EditIcon from '@mui/icons-material/Edit';
 import ViewColumnIcon from '@mui/icons-material/ViewColumn';
 import AddTaskIcon from '@mui/icons-material/AddTask';
@@ -54,13 +56,13 @@ export default function TopNav(props) {
                     </IconButton>
                 </Typography>
 
-                <ButtonGroup variant="outlined">
+                <ButtonGroup variant="outlined" sx={{ marginRight: 2 }}>
                     <Button startIcon={<ViewColumnIcon />} onClick={() => props.handleColumnAdd()} color="inherit">Colonne</Button>
                     <Button startIcon={<AddTaskIcon />} onClick={() => props.handleTaskAdd()} color="inherit">Tâche</Button>
                 </ButtonGroup>
 
-                <ButtonGroup variant="primary">
-                    <Button startIcon={<SaveIcon />} onClick={() => props.handleSave()} color="inherit">Sauvegarder</Button>
+                <ButtonGroup variant="text" color={props.saveButtonColor} >
+                    <Button startIcon={<SaveIcon />} onClick={() => props.handleSave()}   >{props.circularProgress ? <CircularProgress color="secondary" /> : "Sauvegarder"}</Button>
                 </ButtonGroup>
             </Toolbar>
         </AppBar>

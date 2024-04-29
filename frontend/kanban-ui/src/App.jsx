@@ -46,7 +46,14 @@ function App() {
 
   axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 
+  const [saveCircularProgress, setSaveCircularProgress] = useState(false);
+  const [saveButtonColor, setSaveButtonColor] = useState("inherit");
+
+
   const saveContent = () => {
+
+    setSaveCircularProgress(true)
+
     axios.post(global_url_save_content, {
       columnList: taskColumnList,
       taskList: taskList,
@@ -55,9 +62,13 @@ function App() {
     })
       .then(function (response) {
         console.log(response);
+        setSaveCircularProgress(false)
+        setSaveButtonColor("inherit")
       })
       .catch(function (error) {
         console.log(error);
+        setSaveCircularProgress(false)
+        setSaveButtonColor("error")
       });
 
   }
@@ -201,7 +212,7 @@ function App() {
         <ThemeProvider theme={theme}>
 
           <Container maxWidth={false} orientation="horizontal" padding={0}>
-            <TopNav title={title} handleSave={saveContent} handleTitleEdit={editTitle} handleTaskAdd={addTask} handleColumnAdd={addColumn} />
+            <TopNav title={title} saveButtonColor={saveButtonColor} circularProgress={saveCircularProgress} handleSave={saveContent} handleTitleEdit={editTitle} handleTaskAdd={addTask} handleColumnAdd={addColumn} />
 
             <ConfirmationDialog handleOk={confirmTaskToDelete} handleCancel={() => setTaskToDeleteAsked({})} title="Confirmez la suppression" content="Confirmez vous la suppression de cette tache" opened={Object.keys(taskToDeleteAsked).length > 0} />
 
