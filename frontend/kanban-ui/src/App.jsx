@@ -53,6 +53,7 @@ function App() {
 
   const [taskColumnList, setColumnList] = useState([]);
   const [taskList, setTaskList] = useState([]);
+  const [tagList, setTagList] = useState([])
 
   axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 
@@ -124,7 +125,8 @@ function App() {
     let newTask = {
       id: taskList.length + 1,
       title: 'Nouveau tache',
-      content: 'Tache description'
+      content: 'Tache description',
+      tagList: []
     }
 
     let newTaskList = [...taskList]
@@ -215,6 +217,13 @@ function App() {
     setTaskToDeleteAsked({})
   }
 
+  const addTag = (newTag) => {
+    let newTagList = [...tagList]
+    newTagList.push(newTag)
+
+    setTagList(newTagList)
+  }
+
   return (
     <>
       {taskColumnList.length > 0 &&
@@ -229,7 +238,7 @@ function App() {
             <TitleForm opened={Object.keys(titleEdited).length > 0} title={titleEdited.title} handleTitleEdit={editTitle} handleSave={saveEditedTitle} handleClose={closeTitleForm} />
 
             <TaskColumnForm opened={Object.keys(columnEdited).length > 0} column={columnEdited} handleColumnEdit={editColumn} handleSave={saveEditedColumn} handleClose={closeColumnForm} />
-            <TaskForm taskColumnList={taskColumnList} opened={Object.keys(taskEdited).length > 0} task={taskEdited} handleTaskEdit={editTask} handleSave={saveEditedTask} handleClose={closeTaskForm} />
+            <TaskForm tagList={tagList} handleAddTag={addTag} taskColumnList={taskColumnList} opened={Object.keys(taskEdited).length > 0} task={taskEdited} handleTaskEdit={editTask} handleSave={saveEditedTask} handleClose={closeTaskForm} />
             <Container maxWidth="lg" sx={{ margin: 0, mt: 3, padding: 0 }}>
               <Stack direction="row" spacing={1} padding={0} useFlexGap justifyContent="space-evenly">
 

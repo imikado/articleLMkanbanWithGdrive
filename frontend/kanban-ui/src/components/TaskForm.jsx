@@ -1,6 +1,7 @@
 import { Box, Card, CardContent, FormControl, Input, InputLabel, MenuItem, Modal, Select, TextField, Typography } from '@mui/material';
 import React from 'react';
 import Task from './Task';
+import TagInput from './TagInput';
 
 export default function TaskForm(props) {
 
@@ -26,6 +27,13 @@ export default function TaskForm(props) {
 
         props.handleTaskEdit(newTask);
 
+    }
+
+    const updateTagList = (tagList) => {
+        let newTask = { ...props.task }
+        newTask.tagList = tagList
+
+        props.handleTaskEdit(newTask);
     }
 
     return (
@@ -78,6 +86,8 @@ export default function TaskForm(props) {
                                 }
 
                             </Select>
+
+                            <TagInput handleUpdateTagList={updateTagList} value={props.task.tagList} tagList={props.tagList} handleAddTag={props.handleAddTag} />
                         </FormControl>
 
 

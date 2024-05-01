@@ -121,7 +121,7 @@
             <img src="homepage/images/Screenshot_main.png" />
           </p>
           <p class="left-align light">
-            <img src="homepage/images/Screenshot_editTask.png" />
+            <img src="homepage/images/Screenshot_editTask2.png" />
           </p>
         </div>
       </div>
