@@ -10,10 +10,15 @@ import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import AddTaskIcon from '@mui/icons-material/AddTask';
 
 export default function Task(props) {
+
+    const backgroundColor = () => {
+        return props.taskToDeleteAsked.id == props.task.id ? '#fcbacb' : '#fff'
+    }
+
     return (
         <React.Fragment>
             <Box sx={{ m: 1 }}>
-                <Card elevation={3}>
+                <Card elevation={3} sx={{ bgcolor: backgroundColor() }}>
                     <CardContent>
 
                         <Typography variant="h5" color="#333" component="div">

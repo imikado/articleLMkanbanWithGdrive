@@ -13,7 +13,17 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { ConfirmationDialog } from './components/ConfirmationDialog'
 
 
+
+
 const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#c87137',
+    },
+    secondary: {
+      main: '#35a02c',
+    },
+  },
   components: {
     MuiContainer: {
       styleOverrides: {
@@ -113,8 +123,8 @@ function App() {
   const addTask = () => {
     let newTask = {
       id: taskList.length + 1,
-      title: 'new title',
-      content: 'my desc'
+      title: 'Nouveau tache',
+      content: 'Tache description'
     }
 
     let newTaskList = [...taskList]
@@ -148,7 +158,7 @@ function App() {
   const addColumn = () => {
     let newColumn = {
       id: taskColumnList.length + 1,
-      name: 'new column',
+      name: 'Nouvelle colonne',
     }
 
     let newColumnList = [...taskColumnList]
@@ -227,6 +237,7 @@ function App() {
                 {
                   taskColumnList.map((taskColumnLoop) =>
                     <TaskColumn
+                      taskToDeleteAsked={taskToDeleteAsked}
                       handleColumnEdit={editColumn}
                       key={taskColumnLoop.id}
                       handleTaskEdit={editTask}
